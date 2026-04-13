@@ -37,7 +37,7 @@ When the server is running, open `http://localhost:4200/`. The app reloads when 
 
 ## Code quality
 
-- **ESLint**: `pnpm lint` — rules in `eslint.config.js`.
+- **ESLint**: `pnpm lint` - rules in `eslint.config.js`.
 - **Prettier**: settings in `.prettierrc`; use `pnpm format` to apply, or `pnpm format:check` to validate only.
 
 ## Code scaffolding

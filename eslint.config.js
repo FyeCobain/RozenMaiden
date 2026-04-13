@@ -43,7 +43,7 @@ module.exports = defineConfig([
       // "space-before-blocks": ["error", "always"], // Required space before block
       // "spaced-comment": ["error", "always"], // Required space after comment start
       "no-empty": "off", // Allow empty blocks
-      "prefer-const": "off", // prefer const disabled
+      "prefer-const": "error", // Prefer const when variable is never reassigned
       "no-constant-condition": "warn", // Just warn about constant conditions
       "eqeqeq": ["error", "always"], // Required type-safe equality operators
       "no-case-declarations": "warn",  // Just warn about declarations inside case blocks
