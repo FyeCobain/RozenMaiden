@@ -38,6 +38,8 @@ yarn-error.log
 testem.log
 /typings
 lighthouse-desktop.html
+.tmp-dev-err.log
+.tmp-dev-out.log
 __screenshots__/
 
 # System files

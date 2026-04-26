@@ -15,4 +15,15 @@ describe('App', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+
+  it('should render header and footer components', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+
+    const header: HTMLElement | null = fixture.nativeElement.querySelector('rm-header');
+    const footer: HTMLElement | null = fixture.nativeElement.querySelector('rm-footer');
+
+    expect(header).toBeTruthy();
+    expect(footer).toBeTruthy();
+  });
 });

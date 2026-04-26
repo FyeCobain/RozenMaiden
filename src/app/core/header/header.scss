@@ -1,0 +1,57 @@
+@use '../../../styles/mixins' as m;
+
+header {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  padding: 5px 0 0 5px;
+
+  &::before {
+    @include m.bg-roses(180px, 40px);
+  }
+}
+
+a.logo {
+  display: flex;
+  justify-self: start;
+
+  &:not(:hover) {
+    transition: filter ease-in-out var(--time-no-hover-delay);
+  }
+
+  &:hover {
+    transition: filter ease-in-out var(--time-hover-delay);
+    filter: brightness(110%);
+  }
+
+  img {
+    clip-path: polygon(
+      54% 91%,
+      21% 91%,
+      11% 19%,
+      0% 16%,
+      11% 14%,
+      13% 0%,
+      16% 13%,
+      84% 14%,
+      88% 59%,
+      97% 60%,
+      99% 86%,
+      87% 86%,
+      84% 100%,
+      79% 86%,
+      56% 86%
+    );
+    background-color: var(--color-suigintou-alpha-25);
+    filter: hue-rotate(var(--logo-hue-rotation)) brightness(132%) blur(0);
+    transition: filter ease-in-out var(--logo-hue-rotation-delay);
+    width: 242px;
+    height: 106px;
+  }
+}
+
+h1 {
+  grid-column: 2;
+}

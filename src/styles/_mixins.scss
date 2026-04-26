@@ -1,0 +1,15 @@
+// It applies the roses background
+
+@mixin bg-roses($size, $verticalPosition, $opacity: 0.5) {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/img/bg-roses.webp');
+  background-size: $size;
+  background-position: center $verticalPosition;
+  opacity: $opacity;
+  filter: hue-rotate(var(--bg-hue-rotation)) brightness(132%) blur(0);
+  transition: filter ease-in-out var(--bg-hue-rotation-delay);
+}

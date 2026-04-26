@@ -1,24 +1,37 @@
 html {
-  background-color: black;
+  background-color: var(--color-suigintou);
+  font-size: 62.5%;
 }
 
 body {
   margin: 0;
-  position: relative;
-  min-height: 100vh;
+  font-family: var(--font-family-base);
+  color: var(--color-kirakishou);
+  font-size: 1.9rem;
+  line-height: 1.35;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
+a {
+  text-decoration: none;
 
-  background-image: url('/bg-roses.webp');
-  background-size: 250px;
-  opacity: 0.85;
+  &:not(:hover):not(:focus):not(:focus-visible) {
+    color: var(--color-kanaria);
+    transition: color ease-in-out var(--time-no-hover-delay);
+  }
 
-  filter: hue-rotate(var(--bg-hue-rotation));
-  transition: filter ease-in-out var(--bg-hue-rotation-delay);
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    color: var(--color-kanaria-brightness-60);
+    transition: color ease-in-out var(--time-hover-delay);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-kanaria-brightness-60);
+    outline-offset: 0.15em;
+  }
+}
+
+main {
+  padding: 16px;
 }

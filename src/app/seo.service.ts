@@ -13,6 +13,7 @@ type RouteSeoData = {
 
 @Injectable({ providedIn: 'root' })
 export class SEOService {
+  private initialized = false;
   private readonly defaultTitle = 'Rozen Maiden';
   private readonly defaultDescription =
     'Rozen Maiden es una fanpage inspirada en el universo de las munecas vivientes, con estetica victoriana y enfoque en rendimiento y accesibilidad.';
@@ -25,6 +26,9 @@ export class SEOService {
   private readonly document = inject(DOCUMENT);
 
   init(): void {
+    if (this.initialized) return;
+    this.initialized = true;
+
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),

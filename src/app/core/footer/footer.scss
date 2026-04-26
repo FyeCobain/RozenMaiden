@@ -1,0 +1,19 @@
+@use '../../../styles/mixins' as m;
+
+footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 17px;
+
+  b {
+    font-style: italic;
+  }
+
+  &::before {
+    @include m.bg-roses(145px, 2px);
+  }
+}

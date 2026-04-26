@@ -1,0 +1,23 @@
+/* Paul Irish box-sizing reset */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+img {
+  padding: 0;
+  max-width: 100%;
+}

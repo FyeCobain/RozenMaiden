@@ -1,5 +1,21 @@
 :root {
+  // Fonts
+  --font-family-base: 'Libertinus Serif', Georgia, 'Times New Roman', Times, serif;
+
   // Colors
+  --color-suigintou: #32223d;
+  --color-suigintou-alpha-50: color-mix(in srgb, var(--color-suigintou) 50%, transparent);
+  --color-suigintou-alpha-25: color-mix(in srgb, var(--color-suigintou) 25%, transparent);
+  --color-kanaria: #fedd76;
+  --color-kanaria-brightness-60: color-mix(in srgb, var(--color-kanaria) 40%, white);
+  --color-suiseiseki: blue;
+  --color-souseiseki: green;
   --color-shinku: #931916;
+  --color-hinaichigo: pink;
+  --color-kirakishou: #fffcf9;
   --color-barasuishou: #bfa1c5;
+
+  // Delays
+  --time-no-hover-delay: 0.25s;
+  --time-hover-delay: 0.15s;
 }
