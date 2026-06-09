@@ -13,7 +13,9 @@
   --color-shinku: #931916;
   --color-hinaichigo: pink;
   --color-kirakishou: #fffcf9;
-  --color-barasuishou: #bfa1c5;
+  --color-kirakishou-alpha-75: color-mix(in srgb, var(--color-kirakishou) 75%, transparent);
+  --color-barasuishou-base: #bfa1c5;
+  --color-barasuishou-light: #ddc6e1;
 
   // Delays
   --time-no-hover-delay: 0.25s;

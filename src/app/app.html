@@ -1,3 +1,19 @@
 <rm-header />
 <router-outlet />
 <rm-footer />
+
+<button
+  type="button"
+  aria-label="Volver arriba"
+  class="artificial-spirit rotate"
+  [class.is-visible]="$artificialSpiritIsVisibleClass()"
+  [class.float]="$artificialSpiritFloatClass()"
+  [class.fly]="$artificialSpiritFlyClass()"
+  [class.try]="$artificialSpiritTryClass()"
+  [class.glow]="$artificialSpiritGlowClass()"
+  (mouseenter)="onArtificialSpiritMouseEnter()"
+  (mouseleave)="onArtificialSpiritMouseLeave()"
+  (transitionend)="onArtificialSpiritTransitionEnd($event)"
+  (animationend)="onArtificialSpiritAnimationEnd($event)"
+  (click)="onArtificialSpiritClick()"
+></button>

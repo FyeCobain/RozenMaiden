@@ -1,0 +1,259 @@
+.artificial-spirit {
+  position: fixed;
+  border: none;
+  width: 57px;
+  height: 57px;
+  margin: auto;
+  border-radius: 50%;
+  cursor: pointer;
+  top: var(--artificial-spirit-top);
+  background-color: transparent;
+}
+
+.artificial-spirit:not(.fly):not(.try):not(.is-visible) {
+  transition: left var(--artificial-spirit-time-left-out-delay) ease-in-out;
+}
+
+.artificial-spirit:not(.fly):not(.try).is-visible {
+  transition: left var(--artificial-spirit-time-left-in-delay) ease-in-out;
+}
+
+.artificial-spirit::before,
+.artificial-spirit::after {
+  content: '';
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  bottom: 0%;
+  left: 0%;
+  height: 8px;
+  width: 8px;
+  margin: auto;
+  border-radius: 40%;
+  rotate: -35deg;
+  background-color: var(--color-kirakishou-alpha-75);
+  filter: hue-rotate(var(--artificial-spirit-hue-rotation));
+  transition: filter ease-in-out var(--artificial-spirit-hue-rotation-delay);
+}
+
+.artificial-spirit::before {
+  box-shadow: var(--artificial-spirit-box-shadow-idle);
+}
+
+.artificial-spirit::after {
+  box-shadow: var(--artificial-spirit-box-shadow-hover);
+  transition:
+    opacity 300ms,
+    filter ease-in-out var(--artificial-spirit-hue-rotation-delay);
+}
+
+.artificial-spirit:not(:hover)::after {
+  opacity: 0;
+}
+
+.artificial-spirit:hover::after {
+  opacity: 0.5;
+}
+
+.artificial-spirit:not(.is-visible) {
+  left: var(--artificial-spirit-start-left);
+}
+
+.artificial-spirit.is-visible {
+  left: var(--artificial-spirit-left);
+}
+
+/* Float animation */
+.artificial-spirit.float {
+  animation-name: artificial-spirit-float;
+  animation-duration: var(--artificial-spirit-time-float-duration);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+/* Fly animation */
+.artificial-spirit.fly {
+  animation-name: artificial-spirit-fly;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+/* "Try" animation */
+.artificial-spirit.try {
+  animation-name: artificial-spirit-try;
+  animation-duration: 500ms;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
+/* Glow without rotation animation */
+.artificial-spirit.glow:not(.rotate)::before {
+  animation-name: artificial-spirit-glow;
+  animation-duration: var(--artificial-spirit-time-glow-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Rotation without glow animation */
+.artificial-spirit.rotate:not(.glow)::before {
+  animation-name: artificial-spirit-rotate;
+  animation-duration: var(--artificial-spirit-time-rotation-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* Glow and rotation animation */
+.artificial-spirit.glow.rotate::before {
+  animation-name: artificial-spirit-glow, artificial-spirit-rotate;
+  animation-duration: var(--artificial-spirit-time-glow-duration), var(--artificial-spirit-time-rotation-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+// Animations
+@keyframes artificial-spirit-float {
+  0% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(calc(var(--artificial-spirit-float-distance) * -1));
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  75% {
+    transform: translateY(var(--artificial-spirit-float-distance));
+  }
+}
+
+@keyframes artificial-spirit-fly {
+  0% {
+    top: var(--artificial-spirit-top);
+    left: var(--artificial-spirit-left);
+  }
+
+  8.3% {
+    top: calc(var(--artificial-spirit-top) + 0.5%);
+    left: calc(var(--artificial-spirit-left) - 2%);
+  }
+
+  16.6% {
+    top: var(--artificial-spirit-top);
+    left: calc(var(--artificial-spirit-left) - 4.5%);
+  }
+
+  24.9% {
+    top: calc(var(--artificial-spirit-top) - 0.5%);
+    left: calc(var(--artificial-spirit-left) - 5.5%);
+  }
+
+  33.2% {
+    top: calc(var(--artificial-spirit-top) - 1.5%);
+    left: calc(var(--artificial-spirit-left) - 5.75%);
+  }
+
+  41.5% {
+    top: calc(var(--artificial-spirit-top) - 2.5%);
+    left: calc(var(--artificial-spirit-left) - 5.5%);
+  }
+
+  49.8% {
+    top: calc(var(--artificial-spirit-top) - 3%);
+    left: calc(var(--artificial-spirit-left) - 4.5%);
+  }
+
+  58.1% {
+    top: calc(var(--artificial-spirit-top) - 3.5%);
+    left: calc(var(--artificial-spirit-left) - 2%);
+  }
+
+  66.4% {
+    top: calc(var(--artificial-spirit-top) - 3%);
+    left: var(--artificial-spirit-left);
+  }
+
+  74.7% {
+    top: calc(var(--artificial-spirit-top) - 2.5%);
+    left: calc(var(--artificial-spirit-left) + 0.5%);
+  }
+
+  83% {
+    top: calc(var(--artificial-spirit-top) - 1.5%);
+    left: calc(var(--artificial-spirit-left) + 0.75%);
+  }
+
+  91.3% {
+    top: calc(var(--artificial-spirit-top) - 0.5%);
+    left: calc(var(--artificial-spirit-left) + 0.5%);
+  }
+}
+
+@keyframes artificial-spirit-try {
+  8.3% {
+    left: calc(var(--artificial-spirit-left) - 1%);
+  }
+
+  16.6% {
+    left: calc(var(--artificial-spirit-left) - 3.5%);
+  }
+
+  24.9% {
+    left: calc(var(--artificial-spirit-left) - 4.5%);
+  }
+
+  33.2% {
+    left: calc(var(--artificial-spirit-left) - 3.5%);
+  }
+
+  41.5% {
+    left: calc(var(--artificial-spirit-left) - 1%);
+  }
+
+  49.8% {
+    left: var(--artificial-spirit-left);
+  }
+
+  58.1% {
+    left: calc(var(--artificial-spirit-left) + 0.5%);
+  }
+
+  66.4% {
+    left: var(--artificial-spirit-left);
+  }
+}
+
+@keyframes artificial-spirit-glow {
+  0% {
+    box-shadow: var(--artificial-spirit-box-shadow-glow-step-1);
+  }
+
+  20% {
+    box-shadow: var(--artificial-spirit-box-shadow-glow-step-2);
+  }
+
+  50% {
+    box-shadow: var(--artificial-spirit-box-shadow-glow-step-3);
+  }
+
+  70% {
+    box-shadow: var(--artificial-spirit-box-shadow-glow-step-2);
+  }
+
+  100% {
+    box-shadow: var(--artificial-spirit-box-shadow-glow-step-1);
+  }
+}
+
+@keyframes artificial-spirit-rotate {
+  0% {
+    rotate: 0deg;
+  }
+
+  100% {
+    rotate: 360deg;
+  }
+}
