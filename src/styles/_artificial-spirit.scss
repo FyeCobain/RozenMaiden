@@ -1,0 +1,71 @@
+:root {
+  // Posiions
+  --artificial-spirit-top: 70%;
+  --artificial-spirit-start-left: 101%;
+  --artificial-spirit-left: 93%;
+  --artificial-spirit-float-distance: 0.75vh;
+
+  // Time
+  --artificial-spirit-time-left-in-delay: 750ms;
+  --artificial-spirit-time-left-out-delay: 400ms;
+  --artificial-spirit-time-rotation-duration: 10s;
+  --artificial-spirit-time-float-duration: 2.5s;
+  --artificial-spirit-time-glow-duration: 3s;
+
+  // Glow box shadow
+  --artificial-spirit-box-shadow-value-1: 0 0 10px 3px rgba(255, 255, 255, 0.2);
+  --artificial-spirit-box-shadow-value-2: 0 0 10px 1px rgba(255, 255, 255, 0.8);
+  --artificial-spirit-box-shadow-value-3-1: 0 0 18px 20px rgba(255, 25, 0, 0.6);
+  --artificial-spirit-box-shadow-value-3-2: 0 0 18px 20px rgba(255, 25, 0, 0.65);
+  --artificial-spirit-box-shadow-value-3-3: 0 0 18px 20px rgba(255, 25, 0, 0.75);
+  --artificial-spirit-box-shadow-value-3-4: 0 0 18px 20px rgba(251, 68, 48, 0.8);
+  --artificial-spirit-box-shadow-value-4: 0 0 18px 22px rgba(255, 255, 255, 0.5);
+
+  // Hue
+  --artificial-spirit-hue-rotation-light: 365deg;
+  --artificial-spirit-hue-rotation-dark: 273deg;
+  --artificial-spirit-hue-rotation-delay-light: 0.35s;
+  --artificial-spirit-hue-rotation-delay-dark: 0.5s;
+
+  --artificial-spirit-box-shadow-idle:
+    var(--artificial-spirit-box-shadow-value-1), var(--artificial-spirit-box-shadow-value-2),
+    var(--artificial-spirit-box-shadow-value-3-1), var(--artificial-spirit-box-shadow-value-4);
+
+  --artificial-spirit-box-shadow-hover:
+    var(--artificial-spirit-box-shadow-value-1), var(--artificial-spirit-box-shadow-value-2),
+    var(--artificial-spirit-box-shadow-value-3-4), var(--artificial-spirit-box-shadow-value-4);
+
+  --artificial-spirit-box-shadow-glow-step-1: var(--artificial-spirit-box-shadow-idle);
+
+  --artificial-spirit-box-shadow-glow-step-2:
+    var(--artificial-spirit-box-shadow-value-1), var(--artificial-spirit-box-shadow-value-2),
+    var(--artificial-spirit-box-shadow-value-3-2), var(--artificial-spirit-box-shadow-value-4);
+
+  --artificial-spirit-box-shadow-glow-step-3:
+    var(--artificial-spirit-box-shadow-value-1), var(--artificial-spirit-box-shadow-value-2),
+    var(--artificial-spirit-box-shadow-value-3-3), var(--artificial-spirit-box-shadow-value-4);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --artificial-spirit-hue-rotation: var(--artificial-spirit-hue-rotation-light);
+    --artificial-spirit-hue-rotation-delay: var(--artificial-spirit-hue-rotation-delay-light);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --artificial-spirit-hue-rotation: var(--artificial-spirit-hue-rotation-dark);
+    --artificial-spirit-hue-rotation-delay: var(--artificial-spirit-hue-rotation-delay-dark);
+  }
+}
+
+:root[data-theme='light'] {
+  --artificial-spirit-hue-rotation: var(--artificial-spirit-hue-rotation-light);
+  --artificial-spirit-hue-rotation-delay: var(--artificial-spirit-hue-rotation-delay-light);
+}
+
+:root[data-theme='dark'] {
+  --artificial-spirit-hue-rotation: var(--artificial-spirit-hue-rotation-dark);
+  --artificial-spirit-hue-rotation-delay: var(--artificial-spirit-hue-rotation-delay-dark);
+}

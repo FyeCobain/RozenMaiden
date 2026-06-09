@@ -1,11 +1,15 @@
 :root {
-  /* Background hue */
+  // Colors
+  --color-text-light: var(--color-kirakishou);
+  --color-text-dark: var(--color-barasuishou-light);
+
+  // Background hue
   --bg-hue-rotation-light: -10deg;
   --bg-hue-rotation-dark: -60deg;
   --bg-hue-rotation-delay-light: 0.35s;
   --bg-hue-rotation-delay-dark: 0.5s;
 
-  /* Logo hue */
+  // Logo hue
   --logo-hue-rotation-light: -11deg;
   --logo-hue-rotation-dark: -16deg;
   --logo-hue-rotation-delay-light: 0.35s;
@@ -15,6 +19,10 @@
 $themes: light, dark;
 
 /* hue values */
+@mixin color-text($theme) {
+  --color-text: var(--color-text-#{$theme});
+}
+
 @mixin bg-hue($theme) {
   --bg-hue-rotation: var(--bg-hue-rotation-#{$theme});
   --bg-hue-rotation-delay: var(--bg-hue-rotation-delay-#{$theme});
@@ -28,6 +36,7 @@ $themes: light, dark;
 @mixin theme-auto($theme) {
   @media (prefers-color-scheme: #{$theme}) {
     :root:not([data-theme]) {
+      @include color-text($theme);
       @include bg-hue($theme);
       @include logo-hue($theme);
     }
@@ -36,6 +45,7 @@ $themes: light, dark;
 
 @mixin theme-manual($theme) {
   :root[data-theme='#{$theme}'] {
+    @include color-text($theme);
     @include bg-hue($theme);
     @include logo-hue($theme);
   }
