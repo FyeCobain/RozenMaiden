@@ -19,8 +19,7 @@ pnpm install
 | ------------------- | --------------------------------------------------- |
 | `pnpm dev`          | Dev server (`ng serve`) at `http://localhost:4200/` |
 | `pnpm build`        | Production build; output in `dist/`                 |
-| `pnpm test`         | Unit tests (Vitest via `ng test`)                   |
-| `pnpm test:ci`      | Unit tests for CI (`ng test --watch=false`)         |
+| `pnpm test`         | Unit tests (Vitest via `ng test --watch=false`)     |
 | `pnpm lint`         | ESLint for `src/**/*.ts` and `src/**/*.html`        |
 | `pnpm format`       | Run Prettier and write changes                      |
 | `pnpm format:check` | Verify formatting without changing files            |
