@@ -10,7 +10,8 @@
     "lint": "ng lint --fix",
     "lint:ci": "ng lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "private": true,
   "packageManager": "pnpm@10.33.0",
@@ -34,6 +35,7 @@
     "@eslint/js": "^10.0.1",
     "angular-eslint": "21.4.0",
     "eslint": "^10.5.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "prettier": "^3.8.4",
     "typescript": "~5.9.2",
