@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SEOService } from './seo.service';
 import { Header, Footer } from './core';
+import { initThemeShortcut } from './dev-tools/theme-shortcut';
 
 @Component({
   selector: 'rm-root',
@@ -30,6 +31,8 @@ export class App implements OnInit {
     setTimeout(() => {
       this.$artificialSpiritIsVisibleClass.set(true);
     });
+
+    initThemeShortcut();
   }
 
   // Modifies the corresponding signals to add the "float" class to the artificial spirit and remove the "appear" class

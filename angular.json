@@ -50,7 +50,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.production.ts"
+                  "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/app/dev-tools/theme-shortcut.ts",
+                  "with": "src/app/dev-tools/theme-shortcut.prod.ts"
                 }
               ],
               "outputHashing": "all"
