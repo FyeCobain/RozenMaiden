@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class Icon {
   // constants
   private readonly COLOR_ATTRIBUTE_REGEXP: RegExp = /(?<=fill=["']).+?(?=["'])|(?<=fill:).+?(?=["'])/gi;
+  private readonly SIZE_REGEXP: RegExp = /(?<value>\d+(?:\.\d+)?)(?<unit>.+)/;
   private readonly VIEWBOX_ATTRIBUTE_REGEXP: RegExp = /(?<=viewBox=["']).+?(?=['"])/i;
   private readonly VIEWBOX_SINGLE_VALUE_ATTRIBUTE_REGEX: RegExp = /^(?<value>\d+(?:\.\d+)?)$/;
   private readonly VIEWBOX_DOUBLE_VALUE_ATTRIBUTE_REGEX: RegExp = /^(?<value1>\d+(?:\.\d+)?) +(?<value2>\d+(?:\.\d+)?)$/;
@@ -22,9 +23,6 @@ export class Icon {
 
   // Inputs
   readonly name = input.required<IconName>();
-  readonly width = input<number | null>(null);
-  readonly height = input<number | null>(null);
-  readonly scale = input<number>(1);
   readonly color = input<string | null, string | null>(null, {
     transform: v => {
       if (!v) return v;
@@ -33,6 +31,10 @@ export class Icon {
       return v;
     },
   });
+  readonly keepAspectRatio = input<boolean>(true);
+  readonly scale = input<number>(1);
+  readonly width = input<string | null>(null);
+  readonly height = input<string | null>(null);
   readonly viewBox = input<string | null, string | null>(null, {
     transform: v => {
       if (v === null) return v;
@@ -60,34 +62,65 @@ export class Icon {
     const icon = icons[this.name()];
     return {
       code: this.parseCode(icon.code),
-      width: this.getWidth(icon) * this.scale(),
-      height: this.getHeight(icon) * this.scale(),
+      width: this.getWidth(icon),
+      height: this.getHeight(icon),
     };
   });
   protected readonly svgCode = computed(() => this.sanitizer.bypassSecurityTrustHtml(this.icon().code));
-  protected readonly widthStyle = computed(() => `${this.icon().width}px`);
-  protected readonly heightStyle = computed(() => `${this.icon().height}px`);
+  protected readonly widthStyle = computed(() => `${this.icon().width}`);
+  protected readonly heightStyle = computed(() => `${this.icon().height}`);
+
+  // Ensures that the specified size has a unit (by default px)
+  private ensureSizeUnit(size: string | number): string {
+    size = String(size).trim();
+    if (/^\d+(?:\.\d+)?$/.test(size)) size = `${size}px`;
+
+    return size;
+  }
+
+  // Returns an object with the size, unit and a calculate function for the size specified
+  private getSizeAndUnitObject(size: string | number): { value: number; unit: string; calc: (scale: number) => string } {
+    const match = this.ensureSizeUnit(size).match(this.SIZE_REGEXP);
+    return {
+      value: Number(match && match.groups ? match.groups['value'] : 0),
+      unit: match && match.groups ? match.groups['unit'] : 'px',
+      calc: function (scale) {
+        return scale === 1 ? `${this.value}${this.unit}` : `calc(${this.value}${this.unit} * ${scale})`;
+      },
+    };
+  }
 
   // Calculates and returns the width value
-  private getWidth(icon: IconType): number {
+  private getWidth(icon: IconType): string {
+    // Getting defaul width
+    let widthObject = this.getSizeAndUnitObject(icon.width);
+
+    // Getting input width
     const inputWidth = this.width();
-    if (inputWidth !== null) return inputWidth;
+    if (inputWidth !== null) widthObject = this.getSizeAndUnitObject(inputWidth);
+    else if (this.keepAspectRatio()) {
+      const inputHeight = this.height();
+      if (inputHeight !== null)
+        widthObject.value = (this.getSizeAndUnitObject(inputHeight).value / icon.height) * icon.width;
+    }
 
-    const inputHeight = this.height();
-    if (inputHeight !== null) return (inputHeight / icon.height) * icon.width;
-
-    return icon.width;
+    return widthObject.calc(this.scale());
   }
 
   // Calculates and returns the height value
-  private getHeight(icon: IconType): number {
+  private getHeight(icon: IconType): string {
+    // Getting defaul height
+    let heightObject = this.getSizeAndUnitObject(icon.height);
+
+    // Getting input height
     const inputHeight = this.height();
-    if (inputHeight !== null) return inputHeight;
+    if (inputHeight !== null) heightObject = this.getSizeAndUnitObject(inputHeight);
+    else if (this.keepAspectRatio()) {
+      const inputWidth = this.width();
+      if (inputWidth !== null) heightObject.value = (this.getSizeAndUnitObject(inputWidth).value / icon.width) * icon.height;
+    }
 
-    const inputWidth = this.width();
-    if (inputWidth !== null) return (inputWidth / icon.width) * icon.height;
-
-    return icon.height;
+    return heightObject.calc(this.scale());
   }
 
   // Sets the custom color and / or viewbox value
