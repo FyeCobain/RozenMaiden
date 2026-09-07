@@ -29,31 +29,54 @@ function getIconOutput(fileName: string): IconOutput {
 
 // Sets the default icon size and color properties
 function normalizeIcon(iconCode: string): string {
+  // Setting the default icon size
   let height: number = ICON_SIZE;
   let width: number = ICON_SIZE;
 
+  // Checking if the icon has its own height
+  let hasOwnHeight: boolean = false;
+  const iconHeightMatch = iconCode.match(ICON_HEIGHT_REGEXP);
+  if (iconHeightMatch && iconHeightMatch.groups) {
+    hasOwnHeight = true;
+    height = Number(iconHeightMatch.groups['height']);
+  }
+
+  // Checking if the icon has its own width
+  let hasOwnWidth: boolean = false;
+  const iconWidthMatch = iconCode.match(ICON_WIDTH_REGEXP);
+  if (iconWidthMatch && iconWidthMatch.groups) {
+    hasOwnWidth = true;
+    width = Number(iconWidthMatch.groups['width']);
+  }
+
+  // Getting the icon's viewBox and adjusting the default height and width to it
   const viewBoxMatch = iconCode.match(ICON_VIEWBOX_REGEXP);
   if (viewBoxMatch && viewBoxMatch.groups) {
     const viewBoxWidth = Number(viewBoxMatch.groups['width']);
     const viewBoxHeight = Number(viewBoxMatch.groups['height']);
 
     if (viewBoxWidth !== 0 && viewBoxHeight !== 0)
-      if (viewBoxWidth > viewBoxHeight) width = Math.round(width * (viewBoxWidth / viewBoxHeight));
-      else if (viewBoxHeight > viewBoxWidth) height = Math.round(height * (viewBoxHeight / viewBoxWidth));
+      if (viewBoxWidth > viewBoxHeight) {
+        if (!hasOwnWidth) width = Math.round(width * (viewBoxWidth / viewBoxHeight));
+      } else if (!hasOwnHeight && viewBoxHeight > viewBoxWidth) height = Math.round(height * (viewBoxHeight / viewBoxWidth));
 
     iconCode = iconCode.replace(/viewBox *= */gi, 'viewBox=');
   } else iconCode = iconCode.replace(/<svg/i, `<svg viewBox="0 0 ${Math.round(width / 2)} ${Math.round(height / 2)}"`);
 
+  // Cleaning comments
   iconCode = iconCode.replace(/<!--(?:.|\r?\n)+?-->(?:(?:\r?\n)+)?/g, '');
 
+  // Setting height
   iconCode = !/height/i.test(iconCode)
     ? iconCode.replace(/<svg/i, `<svg height="${height}"`)
     : iconCode.replace(/height *= *".+?"/, `height="${height}"`);
 
+  // Setting width
   iconCode = !/width/i.test(iconCode)
     ? iconCode.replace(/<svg/i, `<svg width="${width}"`)
     : iconCode.replace(/width *= *".+?"/, `width="${width}"`);
 
+  // If fill attribute does not exists, setting it as "currentColor"
   if (!ICON_FILL_ATTRIBUTE_REGEXP.test(iconCode) && !ICON_STYLE_FILL_ATTRIBUTE_REGEXP.test(iconCode))
     iconCode = iconCode.replace(/<svg/i, '<svg fill="currentColor"');
   else {
@@ -71,7 +94,6 @@ fs.readdirSync(OUTPUT_ICONS_DIR).forEach(file => {
 
 // Creating new icon files
 const icons: IconOutput[] = [];
-
 fs.readdirSync(INPUT_ICONS_DIR)
   .sort()
   .forEach(file => {
@@ -96,17 +118,6 @@ fs.readdirSync(INPUT_ICONS_DIR)
     const heightMatch = iconCode.match(ICON_HEIGHT_REGEXP);
     if (heightMatch && heightMatch.groups) height = Number(heightMatch.groups['height']);
     iconCode = iconCode.replace(ICON_HEIGHT_REGEXP, 'height="100%"');
-
-    // Getting viewBox
-    // let viewBoxValuesCode: string = '';
-    // const viewBoxMatch = iconCode.match(ICON_VIEWBOX_REGEXP);
-    // if (viewBoxMatch && viewBoxMatch.groups) {
-    //   const viewBoxMinX = Number(viewBoxMatch.groups['minX']);
-    //   const viewBoxMinY = Number(viewBoxMatch.groups['minY']);
-    //   const viewBoxWidth = Number(viewBoxMatch.groups['width']);
-    //   const viewBoxHeight = Number(viewBoxMatch.groups['height']);
-    //   viewBoxValuesCode = `viewBoxMinX: ${viewBoxMinX}, viewBoxMinY: ${viewBoxMinY}, viewBoxWidth: ${viewBoxWidth}, viewBoxHeight: ${viewBoxHeight}`;
-    // }
 
     const outputCode: string = `import { type Icon } from '.';\n\nconst icon: Icon = { width: ${width}, height: ${height}, code: ${JSON.stringify(iconCode)} };\n\nexport default icon;\n`;
 
@@ -140,4 +151,4 @@ fs.writeFileSync(
   (importsCode + '\n' + iconTypeCode + '\n\n' + iconNameTypeCode + '\n\n' + exportCode).trim() + '\n',
 );
 
-console.log(icons.length, 'íconos registrados ✅');
+console.log(icons.length, 'icons ✅');
