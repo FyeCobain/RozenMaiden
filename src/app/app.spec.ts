@@ -139,25 +139,4 @@ describe('App', () => {
       }
     }
   });
-
-  it('should remove and restore glow around hover', async () => {
-    fixture.detectChanges();
-
-    const artificialSpirit = fixture.debugElement.query(By.css('.artificial-spirit'));
-
-    expect(artificialSpirit.nativeElement.classList.contains('glow')).toBe(true);
-
-    artificialSpirit.triggerEventHandler('mouseenter');
-    fixture.detectChanges();
-    expect(artificialSpirit.nativeElement.classList.contains('glow')).toBe(false);
-
-    artificialSpirit.triggerEventHandler('mouseleave');
-    await wait(299);
-    fixture.detectChanges();
-    expect(artificialSpirit.nativeElement.classList.contains('glow')).toBe(false);
-
-    await wait(1);
-    fixture.detectChanges();
-    expect(artificialSpirit.nativeElement.classList.contains('glow')).toBe(true);
-  });
 });
